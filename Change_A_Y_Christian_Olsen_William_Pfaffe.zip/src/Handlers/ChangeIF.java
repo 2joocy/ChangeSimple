@@ -13,5 +13,5 @@ import javax.swing.JComboBox;
  */
 public interface ChangeIF {
     public void addGameToCombo(JComboBox temp);
-    public int getCaugt(int i);
+    
 }

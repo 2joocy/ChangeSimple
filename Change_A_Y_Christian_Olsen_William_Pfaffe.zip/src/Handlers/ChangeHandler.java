@@ -7,9 +7,9 @@ package Handlers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-
 
 /**
  *
@@ -17,9 +17,16 @@ import javax.swing.*;
  */
 public class ChangeHandler implements ChangeIF {
 
+    public ArrayList<String> items = new ArrayList<String>();
     private String Health;
-    private String currentBalance;
+    private String item;
+    private int itemPrice;
+    private int currentBalance;
+    private int turns;
+    private int customsCaugt;
+    private boolean agents;
     private String countrySelected;
+    private String countryTravel;
     private String cocaine;
     private String cocaineWeight;
     private String heroin;
@@ -32,8 +39,6 @@ public class ChangeHandler implements ChangeIF {
     private String angeldustWeight;
     private String meth;
     private String methWeight;
-
-    
 
     @Override
     public void addGameToCombo(JComboBox temp) {
@@ -79,23 +84,23 @@ public class ChangeHandler implements ChangeIF {
                 String[] splitCocaine = split[0].split(",");
                 cocaine = splitCocaine[1];
                 cocaineWeight = splitCocaine[2];
-                
+
                 String[] splitHeroin = split[1].split(",");
                 heroin = splitHeroin[1];
                 heroinWeight = splitHeroin[2];
-                
+
                 String[] splitAmph = split[2].split(",");
                 amphetamine = splitAmph[1];
                 amphWeight = splitAmph[2];
-                
+
                 String[] splitAcid = split[3].split(",");
                 acid = splitAcid[1];
                 acidWeight = splitAcid[2];
-                
+
                 String[] splitAngel = split[4].split(",");
                 angeldust = splitAngel[1];
                 angeldustWeight = splitAngel[2];
-                
+
                 String[] splitMeth = split[5].split(",");
                 meth = splitMeth[1];
                 methWeight = splitMeth[2];
@@ -114,11 +119,55 @@ public class ChangeHandler implements ChangeIF {
         }
 
     }
-    @Override
-    public int getCaugt(int i){
-    Random randomGenerator = new Random();
-    int randomInt = randomGenerator.nextInt(i);
-    return randomInt;
+
+    public boolean getCaugt(int i) {
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(100);
+        if (randomInt > i) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isNegative() {
+        if (currentBalance < 0) {
+            JOptionPane.showMessageDialog(null, "You cannot make this purchase!\n\n "
+                    + "The amount you're trying to buy is higher than you "
+                    + "current balance, please try again!");
+            return false;
+        }
+        return true;
+    }
+
+    public void refreshInventory(JList index) {
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < items.size(); i++) {
+            model.addElement(items.get(i));
+        }
+
+        index.setModel(model);
+    }
+
+    public void refreshJCombo(JComboBox temp) {
+        for (int i = 0; i < items.size(); i += 2) {
+            temp.addItem(items.get(i));
+        }
+    }
+
+    public void checkDrug(String drug) {
+        if (drug.equalsIgnoreCase("Cocaine")) {
+            itemPrice = Integer.parseInt(cocaine);
+        } else if (drug.equalsIgnoreCase("Heroin")) {
+            itemPrice = Integer.parseInt(heroin);
+        } else if (drug.equalsIgnoreCase("Amphetamine")) {
+            itemPrice = Integer.parseInt(amphetamine);
+        } else if (drug.equalsIgnoreCase("Acid")) {
+            itemPrice = Integer.parseInt(acid);
+        } else if (drug.equalsIgnoreCase("Angel Dust")) {
+            itemPrice = Integer.parseInt(angeldust);
+        } else if (drug.equalsIgnoreCase("Crystal Meth")) {
+            itemPrice = Integer.parseInt(meth);
+        }
     }
 
     public String getHealth() {
@@ -224,7 +273,7 @@ public class ChangeHandler implements ChangeIF {
     public void setMethWeight(String methWeight) {
         this.methWeight = methWeight;
     }
-    
+
     public String getCountrySelected() {
         return countrySelected;
     }
@@ -232,13 +281,60 @@ public class ChangeHandler implements ChangeIF {
     public void setCountrySelected(String countrySelected) {
         this.countrySelected = countrySelected;
     }
-    
-    public String getCurrentBalance() {
+
+    public int getCurrentBalance() {
         return currentBalance;
     }
 
-    public void setCurrentBalance(String currentBalance) {
+    public void setCurrentBalance(int currentBalance) {
         this.currentBalance = currentBalance;
     }
 
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public int getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(int itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
+    }
+
+    public String getCountryTravel() {
+        return countryTravel;
+    }
+
+    public void setCountryTravel(String countryTravel) {
+        this.countryTravel = countryTravel;
+    }
+
+    public int getCustomsCaugt() {
+        return customsCaugt;
+    }
+
+    public void setCustomsCaugt(int customsCaugt) {
+        this.customsCaugt = customsCaugt;
+    }
+
+    public boolean isAgents() {
+        return agents;
+    }
+
+    public void setAgents(boolean agents) {
+        this.agents = agents;
+    }
 }
