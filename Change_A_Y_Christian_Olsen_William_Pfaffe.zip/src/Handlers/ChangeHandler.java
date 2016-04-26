@@ -39,6 +39,17 @@ public class ChangeHandler implements ChangeIF {
     private String angeldustWeight;
     private String meth;
     private String methWeight;
+    private String cocaineB;
+    private String heroinB;
+    private String amphB;
+    private String acidB;
+    private String angelB;
+    private String methB;
+    private String player;
+
+    
+   
+    
 
     @Override
     public void addGameToCombo(JComboBox temp) {
@@ -79,6 +90,7 @@ public class ChangeHandler implements ChangeIF {
             String line;
 
             while ((line = bufferReader.readLine()) != null) {
+                System.out.println(line);
                 String split[] = line.split(";");
 
                 String[] splitCocaine = split[0].split(",");
@@ -105,12 +117,12 @@ public class ChangeHandler implements ChangeIF {
                 meth = splitMeth[1];
                 methWeight = splitMeth[2];
 
-//                   System.out.println(cocaine);
-//                   System.out.println(heroin);
-//                   System.out.println(amphetamine);
-//                   System.out.println(acid);
-//                   System.out.println(angeldust);
-//                   System.out.println(meth);
+                   System.out.println(cocaine);
+                   System.out.println(heroin);
+                   System.out.println(amphetamine);
+                   System.out.println(acid);
+                   System.out.println(angeldust);
+                   System.out.println(meth);
             }
 
             bufferReader.close();
@@ -119,6 +131,7 @@ public class ChangeHandler implements ChangeIF {
         }
 
     }
+    
 
     public boolean getCaugt(int i) {
         Random randomGenerator = new Random();
@@ -128,6 +141,43 @@ public class ChangeHandler implements ChangeIF {
         }
         return true;
     }
+    
+    public boolean upOrDown(){
+          Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(100);
+        if (randomInt >= 50) {
+            return false;
+        } 
+        return true;
+    }
+    
+     public int priceChange(){
+          Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(84)+1;
+        return randomInt;
+    }
+     
+     public void newPriceUp(){
+         int i = this.priceChange();
+         cocaine= Integer.toString(Integer.parseInt(cocaine) + (Integer.parseInt(cocaine) /100 * i));
+         heroin= Integer.toString(Integer.parseInt(heroin) + (Integer.parseInt(heroin) /100 * i));
+         amphetamine= Integer.toString(Integer.parseInt(amphetamine) + (Integer.parseInt(amphetamine) /100 * i));
+         acid= Integer.toString(Integer.parseInt(acid) + (Integer.parseInt(acid) /100 * i));
+         angeldust= Integer.toString(Integer.parseInt(angeldust) + (Integer.parseInt(angeldust) /100 * i));
+         meth= Integer.toString(Integer.parseInt(meth) + (Integer.parseInt(meth) /100 * i));
+         
+     }
+     
+     public void newPriceDown(){
+         int i = this.priceChange();
+         cocaine= Integer.toString(Integer.parseInt(cocaine) - (Integer.parseInt(cocaine) /100 * i));
+         heroin= Integer.toString(Integer.parseInt(heroin) - (Integer.parseInt(heroin) /100 * i));
+         amphetamine= Integer.toString(Integer.parseInt(amphetamine) - (Integer.parseInt(amphetamine) /100 * i));
+         acid= Integer.toString(Integer.parseInt(acid) - (Integer.parseInt(acid) /100 * i));
+         angeldust= Integer.toString(Integer.parseInt(angeldust) - (Integer.parseInt(angeldust) /100 * i));
+         meth= Integer.toString(Integer.parseInt(meth) - (Integer.parseInt(meth) /100 * i));
+         
+     }
 
     public boolean isNegative() {
         if (currentBalance < 0) {
@@ -337,4 +387,61 @@ public class ChangeHandler implements ChangeIF {
     public void setAgents(boolean agents) {
         this.agents = agents;
     }
+    public String getCocaineB() {
+        return cocaineB;
+    }
+
+    public void setCocaineB(String cocaineB) {
+        this.cocaineB = cocaineB;
+    }
+
+    public String getHeroinB() {
+        return heroinB;
+    }
+
+    public void setHeroinB(String heroinB) {
+        this.heroinB = heroinB;
+    }
+
+    public String getAmphB() {
+        return amphB;
+    }
+
+    public void setAmphB(String amphB) {
+        this.amphB = amphB;
+    }
+
+    public String getAcidB() {
+        return acidB;
+    }
+
+    public void setAcidB(String acidB) {
+        this.acidB = acidB;
+    }
+
+    public String getAngelB() {
+        return angelB;
+    }
+
+    public void setAngelB(String angelB) {
+        this.angelB = angelB;
+    }
+
+    public String getMethB() {
+        return methB;
+    }
+
+    public void setMethB(String methB) {
+        this.methB = methB;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+    
+    
 }
