@@ -26,6 +26,29 @@ public class index extends javax.swing.JFrame {
     public index() {
         initComponents();
         setupPHP();
+        handle.setList("Danmark");
+        showCocaine.setText(handle.getCocaine() + "$");
+        kgCocaine.setText(handle.getCocaineWeight());
+        showHeroin.setText(handle.getHeroin() + "$");
+        kgHeroin.setText(handle.getHeroinWeight());
+        showAmph.setText(handle.getAmphetamine() + "$");
+        kgAmph.setText(handle.getAngeldustWeight());
+        showAcid.setText(handle.getAcid() + "$");
+        kgAcid.setText(handle.getAcidWeight());
+        showAngel.setText(handle.getAngeldust() + "$");
+        kgAngel.setText(handle.getAngeldustWeight());
+        showMeth.setText(handle.getMeth() + "$");
+        kgMeth.setText(handle.getMethWeight());
+        String playerName = JOptionPane.showInputDialog("Please enter your player name");
+        handle.setPlayer(playerName);
+
+        showPlayer.setText(playerName + " Health");
+        handle.setCocaineB("0");
+        handle.setHeroinB("0");
+        handle.setAmphB("0");
+        handle.setAcidB("0");
+        handle.setAngelB("0");
+        handle.setMethB("0");
         handle.setCountrySelected("Colombia");
         handle.setTurns(0);
         turnsTotal.setText("0");
@@ -35,14 +58,17 @@ public class index extends javax.swing.JFrame {
         healthBar.setForeground(Color.GREEN);
         healthBar.setValue(100);
 
+        countryCombo.setSelectedIndex(1);
+        handle.setList(countryCombo.getItemAt(1));
+
         countryCombo.addActionListener((ActionEvent e) -> {
             JComboBox combo = (JComboBox) e.getSource();
+
             String currentCountry = (String) combo.getSelectedItem();
             if (currentCountry.equalsIgnoreCase(handle.getCountrySelected())) {
                 JOptionPane.showMessageDialog(null, "Cannot smugle drugs to the "
                         + "same country that you are in now!");
             } else {
-                handle.setCountrySelected(currentCountry);
                 handle.setCountrySelected(currentCountry);
                 handle.setList(currentCountry);
                 showCocaine.setText(handle.getCocaine() + "$");
@@ -62,6 +88,15 @@ public class index extends javax.swing.JFrame {
         });
 
         drugList.addActionListener((ActionEvent e) -> {
+            JComboBox combo = (JComboBox) e.getSource();
+            String currentDrug = (String) combo.getSelectedItem();
+            handle.setItem(currentDrug);
+            handle.checkDrug(currentDrug);
+            System.out.println(currentDrug);
+
+        });
+
+        sellInv.addActionListener((ActionEvent e) -> {
             JComboBox combo = (JComboBox) e.getSource();
             String currentDrug = (String) combo.getSelectedItem();
             handle.setItem(currentDrug);
@@ -131,15 +166,14 @@ public class index extends javax.swing.JFrame {
         methKG = new javax.swing.JLabel();
         sellInv = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldSell = new javax.swing.JTextField();
+        sellDrugsText = new javax.swing.JTextField();
         sellDrug = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         showBalance = new javax.swing.JLabel();
         healthBar = new javax.swing.JProgressBar();
-        jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        showPlayer = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         textShowTurns = new javax.swing.JLabel();
         showCurrentCountry = new javax.swing.JLabel();
@@ -239,7 +273,7 @@ public class index extends javax.swing.JFrame {
                             .addComponent(kgCocaine)
                             .addComponent(jLabel28)))
                     .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanelCountryStashLayout.setVerticalGroup(
             jPanelCountryStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,38 +347,40 @@ public class index extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelCountryStash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(drugList, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(buyDrug, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(amountBuy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jPanelCountryStash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(amountBuy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(buyDrug, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(drugList, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelCountryStash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(drugList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(11, 11, 11)
-                .addComponent(amountBuy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buyDrug)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelCountryStash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(drugList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(amountBuy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buyDrug)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         jPanelPlayerStash.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Player Stash", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -444,6 +480,12 @@ public class index extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        sellInv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sellInvActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Enter amount to sell");
 
@@ -456,39 +498,58 @@ public class index extends javax.swing.JFrame {
 
         jLabel27.setText("         [NAME]       [KG]");
 
+        jButton3.setText("HighScores");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelPlayerStashLayout = new javax.swing.GroupLayout(jPanelPlayerStash);
         jPanelPlayerStash.setLayout(jPanelPlayerStashLayout);
         jPanelPlayerStashLayout.setHorizontalGroup(
             jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelPlayerStashLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel4))
-                    .addComponent(jTextFieldSell)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(sellInv, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelPlayerDrugList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(sellDrug, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jButton3))
+                    .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
+                                .addComponent(jPanelPlayerDrugList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(sellDrugsText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel4))
+                                        .addComponent(sellInv, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(sellDrug, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanelPlayerStashLayout.setVerticalGroup(
             jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
                 .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPlayerDrugList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sellInv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sellDrug)
+                .addGroup(jPanelPlayerStashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelPlayerDrugList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelPlayerStashLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(sellInv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sellDrugsText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sellDrug)))
+                .addGap(386, 386, 386)
+                .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -499,8 +560,8 @@ public class index extends javax.swing.JFrame {
 
         healthBar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Player Health");
+        showPlayer.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        showPlayer.setText("Player Health");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -509,45 +570,31 @@ public class index extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(healthBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(healthBar, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(showBalance)
-                            .addComponent(jLabel5))
+                            .addComponent(showPlayer))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addContainerGap(7, Short.MAX_VALUE)
+                .addComponent(showPlayer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(healthBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(showBalance)
                 .addContainerGap())
         );
 
-        jButton2.setText("Options");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("HighScores");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         textShowTurns.setText("Total Days Played: ");
 
-        showCurrentCountry.setText("Current Country: Colombia");
+        showCurrentCountry.setText("Current Country: Denmark");
 
         buyHealth.setText("Buy");
         buyHealth.addActionListener(new java.awt.event.ActionListener() {
@@ -625,43 +672,36 @@ public class index extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelPlayerStash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(54, 54, 54))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(227, 227, 227)))
-                .addContainerGap())
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelPlayerStash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelPlayerStash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPlayerStash, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -678,7 +718,6 @@ public class index extends javax.swing.JFrame {
                 chance = 3;
             }
 
-            //Player needs to start in Colombia
             //ONLY these contries can be in the game, NO EXCEPTIONS OR MORE!
             // Denmark, Colombia, Germany, USA, France, Afghanistan
             //First turn af the        
@@ -711,6 +750,15 @@ public class index extends javax.swing.JFrame {
 
                     if (handle.getCaugt(65) == true) {
                         JOptionPane.showMessageDialog(null, "Prices have changed since your last review!");
+                        if (handle.upOrDown() == false) {
+                            JOptionPane.showMessageDialog(null, "Prices have decreased");
+                            handle.newPriceDown();
+                            showAcid.setText(handle.getAcid());
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Prices have increased");
+                            handle.newPriceUp();
+                            showAcid.setText(handle.getAcid());
+                        }
                     }
                 }
             } else if (dialogButton == 1) {
@@ -720,7 +768,10 @@ public class index extends javax.swing.JFrame {
             }
         } else if (handle.getTurns() >= 20) {
             JOptionPane.showMessageDialog(null, "Game has finished!");
+            
+            //Highscore record
         }
+
 
     }//GEN-LAST:event_commitTravelActionPerformed
 
@@ -741,23 +792,44 @@ public class index extends javax.swing.JFrame {
                 handle.setCurrentBalance(handle.getCurrentBalance() - currentPrice);
                 showBalance.setText("Current Balance: " + handle.getCurrentBalance() + "$");
                 handle.items.add(handle.getItem());
-                handle.items.add(amountBuy.getText());                
+                handle.items.add(amountBuy.getText());
                 handle.refreshJCombo(sellInv);
                 JOptionPane.showMessageDialog(null, "Bought " + amountBuy.getText() + " Kg of Drugs for " + currentPrice + " Dollars$. \n\n Your balance is: " + handle.getCurrentBalance(),
                         "Trade Complete", JOptionPane.NO_OPTION);
-//                if (handle.getItem().equalsIgnoreCase("Cocaine")) {
-//                    handle.setCocaineB(Integer.toString(Integer.parseInt(handle.getCocaineB()) + Integer.parseInt(amountBuy.getText())));
-//                } else if (handle.getItem().equalsIgnoreCase("Heroin")) {
-//                    handle.setHeroinB(Integer.toString(Integer.parseInt(handle.getHeroinB()) + Integer.parseInt(amountBuy.getText())));
-//                } else if (handle.getItem().equalsIgnoreCase("Amphetamine")) {
-//                    handle.setAmphB(Integer.toString(Integer.parseInt(handle.getAmphB()) + Integer.parseInt(amountBuy.getText())));
-//                } else if (handle.getItem().equalsIgnoreCase("Acid")) {
-//                    handle.setAcidB(Integer.toString(Integer.parseInt(handle.getAcidB()) + Integer.parseInt(amountBuy.getText())));
-//                } else if (handle.getItem().equalsIgnoreCase("Angel Dust")) {
-//                    handle.setAngelB(Integer.toString(Integer.parseInt(handle.getAngelB()) + Integer.parseInt(amountBuy.getText())));
-//                } else if (handle.getItem().equalsIgnoreCase("Crystal Meth")) {
-//                    handle.setMethB(Integer.toString(Integer.parseInt(handle.getMethB()) + Integer.parseInt(amountBuy.getText())));
-//                }
+
+                if (handle.getItem().equalsIgnoreCase("Cocaine")) {
+                    handle.setCocaineB(Integer.toString(Integer.parseInt(handle.getCocaineB()) + Integer.parseInt(amountBuy.getText())));
+                    cocaineKG.setText(handle.getCocaineB());
+
+                    handle.setCocaineWeight(Integer.toString(Integer.parseInt(handle.getCocaineWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgCocaine.setText(handle.getCocaineWeight());
+                } else if (handle.getItem().equalsIgnoreCase("Heroin")) {
+                    handle.setHeroinB(Integer.toString(Integer.parseInt(handle.getHeroinB()) + Integer.parseInt(amountBuy.getText())));
+                    heroinKG.setText(handle.getHeroinB());
+
+                    handle.setHeroinWeight(Integer.toString(Integer.parseInt(handle.getHeroinWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgHeroin.setText(handle.getHeroinWeight());
+                } else if (handle.getItem().equalsIgnoreCase("Amphetamine")) {
+                    handle.setAmphB(Integer.toString(Integer.parseInt(handle.getAmphB()) + Integer.parseInt(amountBuy.getText())));
+                    amphKG.setText(handle.getAmphB());
+                    handle.setAmphWeight(Integer.toString(Integer.parseInt(handle.getAmphWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgAmph.setText(handle.getAmphWeight());
+                } else if (handle.getItem().equalsIgnoreCase("Acid")) {
+                    handle.setAcidB(Integer.toString(Integer.parseInt(handle.getAcidB()) + Integer.parseInt(amountBuy.getText())));
+                    acidKG.setText(handle.getAcidB());
+                    handle.setAcidWeight(Integer.toString(Integer.parseInt(handle.getAcidWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgAcid.setText(handle.getAcidWeight());
+                } else if (handle.getItem().equalsIgnoreCase("Angel Dust")) {
+                    handle.setAngelB(Integer.toString(Integer.parseInt(handle.getAngelB()) + Integer.parseInt(amountBuy.getText())));
+                    angelKG.setText(handle.getAngelB());
+                    handle.setAngeldustWeight(Integer.toString(Integer.parseInt(handle.getAngeldustWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgAngel.setText(handle.getAngeldustWeight());
+                } else if (handle.getItem().equalsIgnoreCase("Crystal Meth")) {
+                    handle.setMethB(Integer.toString(Integer.parseInt(handle.getMethB()) + Integer.parseInt(amountBuy.getText())));
+                    methKG.setText(handle.getMethB());
+                    handle.setMethWeight(Integer.toString(Integer.parseInt(handle.getMethWeight()) - Integer.parseInt(amountBuy.getText())));
+                    kgMeth.setText(handle.getMethWeight());
+                }
 
             } else if (dialogButton == 1) {
                 JOptionPane.showMessageDialog(null, "You've cancelled the trade....",
@@ -784,10 +856,6 @@ public class index extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Opens HighScore Table");        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane.showMessageDialog(null, "shows help and describes how to play the game");        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void buyHealthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyHealthActionPerformed
         int price = 600;
         if (handle.getCurrentBalance() < price) {
@@ -805,7 +873,7 @@ public class index extends javax.swing.JFrame {
         int price = 2000;
         if (handle.isAgents() == false) {
             JOptionPane.showMessageDialog(null, "Agents offer special abillities, "
-                    + "such as lowering chances of getting caugt in customs! "
+                    + "such as lowering chances of getting caught in customs! "
                     + "Costly, but efficient");
 
             if (handle.getCurrentBalance() < price) {
@@ -829,12 +897,53 @@ public class index extends javax.swing.JFrame {
             handle.setAgents(true);
         }
 
-
     }//GEN-LAST:event_buyAgentsActionPerformed
 
     private void sellDrugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellDrugActionPerformed
-        handle.sout();
+        if (Integer.parseInt(handle.getCocaineB()) < Integer.parseInt(sellDrugsText.getText()) || 
+                Integer.parseInt(handle.getHeroinB()) < Integer.parseInt(sellDrugsText.getText()) || 
+                Integer.parseInt(handle.getAmphB()) < Integer.parseInt(sellDrugsText.getText()) ||
+                Integer.parseInt(handle.getAcidB()) < Integer.parseInt(sellDrugsText.getText()) ||
+                Integer.parseInt(handle.getAngelB()) < Integer.parseInt(sellDrugsText.getText()) ||
+                Integer.parseInt(handle.getMethB()) < Integer.parseInt(sellDrugsText.getText())) {
+            JOptionPane.showMessageDialog(null, "Insufficient Amount Of Drugs!");
+        } else{
+            
+        
+        
+        if (handle.getItem().equalsIgnoreCase("Cocaine")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getCocaine()));
+            handle.setCocaineB(Integer.toString(Integer.parseInt(handle.getCocaineB() )- Integer.parseInt(sellDrugsText.getText())));
+            cocaineKG.setText(handle.getCocaineB());
+        } else if (handle.getItem().equalsIgnoreCase("Heroin")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getHeroin()));
+            handle.setHeroinB(Integer.toString(Integer.parseInt(handle.getHeroinB() )- Integer.parseInt(sellDrugsText.getText())));
+            heroinKG.setText(handle.getHeroinB());
+        } else if (handle.getItem().equalsIgnoreCase("Amphetamine")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getAmphetamine()));
+            handle.setAmphB(Integer.toString(Integer.parseInt(handle.getAmphB())- Integer.parseInt(sellDrugsText.getText())));
+            amphKG.setText(handle.getAmphB());
+        } else if (handle.getItem().equalsIgnoreCase("Acid")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getAcid()));
+            handle.setAcidB(Integer.toString(Integer.parseInt(handle.getAcidB() )- Integer.parseInt(sellDrugsText.getText())));
+            acidKG.setText(handle.getAcidB());
+        } else if (handle.getItem().equalsIgnoreCase("Angel Dust")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getAngeldust()));
+            handle.setAngelB(Integer.toString(Integer.parseInt(handle.getAngelB())- Integer.parseInt(sellDrugsText.getText())));
+            angelKG.setText(handle.getAngelB());
+        } else if (handle.getItem().equalsIgnoreCase("Crystal Meth")) {
+            handle.setCurrentBalance(handle.getCurrentBalance() + Integer.parseInt(sellDrugsText.getText()) * Integer.parseInt(handle.getMeth()));
+            handle.setMeth(Integer.toString(Integer.parseInt(handle.getMethB() )- Integer.parseInt(sellDrugsText.getText())));
+            methKG.setText(handle.getMethB());
+        }
+        }
+        
+        
     }//GEN-LAST:event_sellDrugActionPerformed
+
+    private void sellInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellInvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sellInvActionPerformed
 
     /**
      * @param args the command line arguments
@@ -886,7 +995,6 @@ public class index extends javax.swing.JFrame {
     private javax.swing.JLabel hasAgents;
     private javax.swing.JProgressBar healthBar;
     private javax.swing.JLabel heroinKG;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -903,7 +1011,6 @@ public class index extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -915,7 +1022,6 @@ public class index extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCountryStash;
     private javax.swing.JPanel jPanelPlayerDrugList;
     private javax.swing.JPanel jPanelPlayerStash;
-    private javax.swing.JTextField jTextFieldSell;
     private javax.swing.JLabel kgAcid;
     private javax.swing.JLabel kgAmph;
     private javax.swing.JLabel kgAngel;
@@ -924,6 +1030,7 @@ public class index extends javax.swing.JFrame {
     private javax.swing.JLabel kgMeth;
     private javax.swing.JLabel methKG;
     private javax.swing.JButton sellDrug;
+    private javax.swing.JTextField sellDrugsText;
     private javax.swing.JComboBox<String> sellInv;
     private javax.swing.JLabel showAcid;
     private javax.swing.JLabel showAmph;
@@ -933,6 +1040,7 @@ public class index extends javax.swing.JFrame {
     private javax.swing.JLabel showCurrentCountry;
     private javax.swing.JLabel showHeroin;
     private javax.swing.JLabel showMeth;
+    private javax.swing.JLabel showPlayer;
     private javax.swing.JLabel textShowTurns;
     private javax.swing.JLabel turnsTotal;
     // End of variables declaration//GEN-END:variables
