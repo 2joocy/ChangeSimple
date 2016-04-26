@@ -3,20 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Handlers;
+package Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author William
+ * @author RadeonXRay
  */
-public class ChangeHandler implements ChangeIF {
-
+public class modelData {
+    
     public ArrayList<String> items = new ArrayList<String>();
     private String Health;
     private String item;
@@ -46,13 +49,8 @@ public class ChangeHandler implements ChangeIF {
     private String angelB;
     private String methB;
     private String player;
-
     
-   
-    
-
-    @Override
-    public void addGameToCombo(JComboBox temp) {
+     public void addGameToCombo(JComboBox temp) {
         String fileName = "countrylist.txt";
         try {
 
@@ -77,8 +75,8 @@ public class ChangeHandler implements ChangeIF {
         }
 
     }
-
-    public void setList(String Country) {
+     
+     public void setList(String Country) {
 
         String fileName = Country + ".txt";
         try {
@@ -132,8 +130,7 @@ public class ChangeHandler implements ChangeIF {
 
     }
     
-
-    public boolean getCaugt(int i) {
+      public boolean getCaugt(int i) {
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(100);
         if (randomInt > i) {
@@ -141,8 +138,7 @@ public class ChangeHandler implements ChangeIF {
         }
         return true;
     }
-    
-    public boolean upOrDown(){
+      public boolean priceUpOrDown(){
           Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(100);
         if (randomInt >= 50) {
@@ -150,14 +146,14 @@ public class ChangeHandler implements ChangeIF {
         } 
         return true;
     }
-    
-     public int priceChange(){
+      
+      public int priceChange(){
           Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(84)+1;
         return randomInt;
     }
-     
-     public void newPriceUp(){
+      
+       public void newPriceUp(){
          int i = this.priceChange();
          cocaine= Integer.toString(Integer.parseInt(cocaine) + (Integer.parseInt(cocaine) /100 * i));
          heroin= Integer.toString(Integer.parseInt(heroin) + (Integer.parseInt(heroin) /100 * i));
@@ -167,8 +163,7 @@ public class ChangeHandler implements ChangeIF {
          meth= Integer.toString(Integer.parseInt(meth) + (Integer.parseInt(meth) /100 * i));
          
      }
-     
-     public void newPriceDown(){
+         public void newPriceDown(){
          int i = this.priceChange();
          cocaine= Integer.toString(Integer.parseInt(cocaine) - (Integer.parseInt(cocaine) /100 * i));
          heroin= Integer.toString(Integer.parseInt(heroin) - (Integer.parseInt(heroin) /100 * i));
@@ -178,8 +173,7 @@ public class ChangeHandler implements ChangeIF {
          meth= Integer.toString(Integer.parseInt(meth) - (Integer.parseInt(meth) /100 * i));
          
      }
-
-    public boolean isNegative() {
+       public boolean isNegative() {
         if (currentBalance < 0) {
             JOptionPane.showMessageDialog(null, "You cannot make this purchase!\n\n "
                     + "The amount you're trying to buy is higher than you "
@@ -188,8 +182,8 @@ public class ChangeHandler implements ChangeIF {
         }
         return true;
     }
-
-    public void refreshInventory(JList index) {
+       
+        public void refreshInventory(JList index) {
         DefaultListModel model = new DefaultListModel();
         for (int i = 0; i < items.size(); i++) {
             model.addElement(items.get(i));
@@ -197,14 +191,14 @@ public class ChangeHandler implements ChangeIF {
 
         index.setModel(model);
     }
-
-    public void refreshJCombo(JComboBox temp) {
+        
+        public void refreshJCombo(JComboBox temp) {
         for (int i = 0; i < items.size(); i += 2) {
             temp.addItem(items.get(i));
         }
     }
-
-    public void checkDrug(String drug) {
+        
+            public void checkDrug(String drug) {
         if (drug.equalsIgnoreCase("Cocaine")) {
             itemPrice = Integer.parseInt(cocaine);
         } else if (drug.equalsIgnoreCase("Heroin")) {
@@ -219,8 +213,8 @@ public class ChangeHandler implements ChangeIF {
             itemPrice = Integer.parseInt(meth);
         }
     }
-
-    public String getHealth() {
+            
+             public String getHealth() {
         return Health;
     }
 
@@ -442,6 +436,7 @@ public class ChangeHandler implements ChangeIF {
     public void setPlayer(String player) {
         this.player = player;
     }
-    
-    
+       
+      
+      
 }
