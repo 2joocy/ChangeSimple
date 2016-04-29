@@ -93,7 +93,7 @@ public class Gui extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Please enter a player name!");
 
             }
-            eE();
+            
             healthBar.setValue(100);
             healthBar.setStringPainted(true);
             handle.setPlayer(playerName);
