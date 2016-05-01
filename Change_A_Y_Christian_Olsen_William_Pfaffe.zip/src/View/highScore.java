@@ -6,6 +6,8 @@
 package View;
 
 import Control.ChangeHandler;
+import java.util.Arrays;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -13,13 +15,32 @@ import Control.ChangeHandler;
  */
 public class highScore extends javax.swing.JFrame {
 
-    ChangeHandler ch;
-     
+    ChangeHandler ch =  new ChangeHandler();
     public highScore() {
-        ch = new ChangeHandler();
+        
         initComponents();
-      
+        ch.setFile();
+//        ch.loadHighScoreList();
+        ch.getNumberOfScores();
+        
+        jLabel2.setText("Number of scores in document: " + Integer.toString(ch.getNumberOfScores()));
+        //System.out.println(Arrays.toString(ch.getScoreList()));
+        
     }
+    
+   
+    
+    
+//      public void setjList() {
+//        DefaultListModel<> listModel = new DefaultListModel<>();
+//        for (String testingModel : ch.getScoreList())) {
+//            listModel.addElement(testingModel);
+//        }
+//
+//        jList1.setModel(listModel);
+//        jList1.setModel(listModel);
+//    
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,6 +56,7 @@ public class highScore extends javax.swing.JFrame {
         closeHighScore = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +83,8 @@ public class highScore extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,7 +102,9 @@ public class highScore extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(163, 163, 163))
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel2)
+                        .addGap(48, 48, 48))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(138, 138, 138))))
@@ -89,7 +115,9 @@ public class highScore extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(25, 25, 25)
@@ -118,6 +146,7 @@ public class highScore extends javax.swing.JFrame {
     private javax.swing.JButton closeHighScore;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

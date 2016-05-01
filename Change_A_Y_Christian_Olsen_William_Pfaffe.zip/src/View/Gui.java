@@ -28,6 +28,8 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+
+        
         setupPlayer();
         setVisible(true);
         handle.setList("Danmark");
@@ -729,6 +731,7 @@ public class Gui extends javax.swing.JFrame {
             int chance = 5;
             if (handle.isAgents() == true) {
                 chance = 3;
+               
             }
 
             //ONLY these contries can be in the game, NO EXCEPTIONS OR MORE!

@@ -6,7 +6,6 @@
 package Model;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class modelData {
     private int currentBalance;
     private int turns;
     private int customsCaugt;
-    private int numberOfScores;
+    public int numberOfScores;
     private boolean agents;
     private String countrySelected;
     private String countryTravel;
@@ -437,7 +436,7 @@ public class modelData {
 
     /**
      *Sets the amount (weight) of Amph(etamine) available at the dealer.
-     * @param amphWeight
+     * @param amphWeight String as input
      */
     public void setAmphWeight(String amphWeight) {
         this.amphWeight = amphWeight;
@@ -445,7 +444,7 @@ public class modelData {
 
     /**
      *Gets the amount (weight) of Acid available at the dealer.
-     * @return
+     * @return acidWeight
      */
     public String getAcidWeight() {
         return acidWeight;
@@ -746,6 +745,16 @@ public class modelData {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
+
+    public int getNumberOfScores() {
+        return numberOfScores;
+    }
+
+    public void setNumberOfScores(int numberOfScores) {
+        this.numberOfScores = numberOfScores;
+    }
+    
+    
     
    public void setFile() {
 
@@ -783,6 +792,11 @@ public class modelData {
         return hsList;
     }
 
+
+
+   
+    
+ 
 
   
     

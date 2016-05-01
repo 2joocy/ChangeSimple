@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Model.HighScoreKeeper;
 import Model.modelData;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,6 +20,11 @@ import javax.swing.*;
 public class ChangeHandler implements ChangeIF {
 
     private modelData data = new modelData();
+    
+    /**
+     *
+     */
+    public ArrayList<String> sList = new ArrayList<>();
 
     /**
      *Creates a new ArrayList based on String
@@ -287,7 +293,7 @@ public class ChangeHandler implements ChangeIF {
 
     /**
      *Sets the amount (weight) of Amph(etamine) available at the dealer.
-     * @param amphWeight
+     * @param amphWeight String as input
      */
     public void setAmphWeight(String amphWeight) {
         data.setAmphWeight(amphWeight);
@@ -295,7 +301,7 @@ public class ChangeHandler implements ChangeIF {
 
      /**
      *Gets the amount (weight) of Acid available at the dealer.
-     * @return
+     * @return data.getAcidWeight
      */
     public String getAcidWeight() {
         return data.getAcidWeight();
@@ -597,6 +603,51 @@ public class ChangeHandler implements ChangeIF {
     public void setHighScore(int highScore) {
         data.setHighScore(highScore);
     }
+    
+    /**
+     *Creates a new ArrayList based on data.loadHighScoreList();
+     * @return data.loadHighScorreList
+     */
+//    public ArrayList<HighScoreKeeper> loadHighScoreList() {
+//    return data.loadHighScoreList();
+//    
+//    }
+    
+    /**
+     *Sets the highscore file
+     */
+    public void setFile(){
+         data.setFile();
+         
+     }
+     
+    /**
+     *Gets the number of scores in the Highscore document
+     * @return data.numberOfScores;
+     */
+    public int getNumberOfScores() {
+        return data.numberOfScores;
+    }
+       
+    /**
+     *This method is supposed to create a new ArrayList and String containing the playerName and playerScore,
+     * and send it on to the jList in the Highscore GUI.
+     * @return finalScoreList;
+     */
+    public String[] getScoreList(){
+        
+        for (HighScoreKeeper score : data.loadHighScoreList()) {
+            sList.add(score.getPlayerName()/* + " " + score.getPlayerScore()*/);
+        }
+        
+        String[] finalScoreList = sList.toArray(new String[sList.size()]);
+        
+        return finalScoreList;
+    }
+    
+    
+     
+     
     
     
     
