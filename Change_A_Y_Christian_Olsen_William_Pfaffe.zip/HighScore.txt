@@ -1,0 +1,2 @@
+Christian,10000
+William,9000

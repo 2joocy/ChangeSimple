@@ -6,9 +6,14 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -24,6 +29,8 @@ public class modelData {
      *
      */
     public ArrayList<String> items = new ArrayList<String>();
+    private ArrayList<HighScoreKeeper> scoreColl = new ArrayList<>();
+    
     private String Health;
     private String item;
     private int highScore;
@@ -31,6 +38,7 @@ public class modelData {
     private int currentBalance;
     private int turns;
     private int customsCaugt;
+    private int numberOfScores;
     private boolean agents;
     private String countrySelected;
     private String countryTravel;
@@ -53,6 +61,8 @@ public class modelData {
     private String angelB;
     private String methB;
     private String player;
+    
+    FileReader f;
     
     /**
      *Adds a list of countries to the JComboBox from a file.
@@ -736,6 +746,43 @@ public class modelData {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
+    
+   public void setFile() {
+
+        try {
+            f = new FileReader("HighScore.txt");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(HighScoreKeeper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public ArrayList<HighScoreKeeper> loadHighScoreList() {
+
+        ArrayList<HighScoreKeeper> hsList = new ArrayList();
+
+        try {
+
+            BufferedReader br = new BufferedReader(f);
+            String line = null;
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                hsList.add(new HighScoreKeeper(player, highScore));
+                
+
+            }
+            br.close();
+            numberOfScores = hsList.size();
+
+        } catch (IOException ex) {
+            Logger.getLogger(HighScoreKeeper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return hsList;
+    }
+
 
   
     
