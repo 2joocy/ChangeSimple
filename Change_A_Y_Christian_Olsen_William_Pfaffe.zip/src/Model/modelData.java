@@ -23,6 +23,7 @@ public class modelData {
     public ArrayList<String> items = new ArrayList<String>();
     private String Health;
     private String item;
+    private int highScore;
     private int itemPrice;
     private int currentBalance;
     private int turns;
@@ -49,6 +50,7 @@ public class modelData {
     private String angelB;
     private String methB;
     private String player;
+    
     
      public void addGameToCombo(JComboBox temp) {
         String fileName = "countrylist.txt";
@@ -436,7 +438,16 @@ public class modelData {
     public void setPlayer(String player) {
         this.player = player;
     }
-       
-      
-      
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+  
+    
+
 }

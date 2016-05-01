@@ -304,6 +304,14 @@ public class ChangeHandler implements ChangeIF {
         data.setPlayer(player);
     }
     
+      public int getHighScore() {
+        return data.getHighScore();
+    }
+
+    public void setHighScore(int highScore) {
+        data.setHighScore(highScore);
+    }
+    
     
     
     
