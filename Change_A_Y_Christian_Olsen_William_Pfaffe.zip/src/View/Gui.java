@@ -29,6 +29,7 @@ public class Gui extends javax.swing.JFrame {
     public Gui() {
         initComponents();
         setupPlayer();
+        setVisible(true);
         handle.setList("Danmark");
         setupDrugs();
         handle.setCocaineB("0");
