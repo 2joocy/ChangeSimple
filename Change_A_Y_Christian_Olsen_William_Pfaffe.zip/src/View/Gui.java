@@ -85,6 +85,9 @@ public class Gui extends javax.swing.JFrame {
 
     }
 
+    /**
+     *Method to setups the player, inlcuding name and playerName.
+     */
     public void setupPlayer() {
         String playerName = "";
 
@@ -102,6 +105,9 @@ public class Gui extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *Method to setup the drugs for the countries.
+     */
     public void setupDrugs() {
 
         showCocaine.setText(handle.getCocaine() + "$");

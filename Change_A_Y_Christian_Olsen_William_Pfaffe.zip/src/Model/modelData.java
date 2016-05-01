@@ -254,8 +254,8 @@ public class modelData {
     }
         
     /**
-     *
-     * @param drug
+     *Sets the drugs prices
+     * @param drug String as input
      */
     public void checkDrug(String drug) {
         if (drug.equalsIgnoreCase("Cocaine")) {
